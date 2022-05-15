@@ -12,10 +12,19 @@ app.get('/', (_req, res) => {
     res.status(200).send('WELCOME!!')
 });
 
-db.sequelize.sync({ force: false }).then(() => {
-    console.log("Drop database and resync");
-    app.listen(PORT, () => {
-        console.log(`App is running at http://localhost:${PORT} in development mode
+app.listen(PORT, () => {
+    console.log(`App is running at http://localhost:${PORT} in development mode
 Press CTRL-C to stop`)
+
+    db.sequelize.authenticate().then(async () => {
+        console.log("database connected")
+        try {
+            await db.sequelize.sync({ force: true })
+        } catch (error: any) {
+            console.log(error.message)
+        }
+
+    }).catch((e: any) => {
+        console.log(e.message)
     })
 })

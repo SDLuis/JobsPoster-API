@@ -1,5 +1,7 @@
-import { Dialect, Sequelize } from 'sequelize'
+import { Dialect, } from 'sequelize'
+import { Sequelize } from 'sequelize-typescript';
 import dbConfig from '../config/dbConfig'
+import userModel from './User.model'
 
 const sequelize = new Sequelize(
     dbConfig.database as string,
@@ -7,6 +9,7 @@ const sequelize = new Sequelize(
     dbConfig.password,
     {
         host: dbConfig.host,
+        models: [userModel] ,
         dialect: dbConfig.dialect as Dialect,
         pool: {
             max: dbConfig.pool.max,
@@ -16,11 +19,11 @@ const sequelize = new Sequelize(
         },
     },
 );
+
 let db = {
     Sequelize,
-    sequelize
-};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+    sequelize,
+}
 
 export default db
+
