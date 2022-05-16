@@ -2,6 +2,7 @@ import { Dialect, } from 'sequelize'
 import { Sequelize } from 'sequelize-typescript';
 import dbConfig from '../config/dbConfig'
 import userModel from './User.model'
+import jobModel from './Job.model'
 
 const sequelize = new Sequelize(
     dbConfig.database as string,
@@ -9,7 +10,7 @@ const sequelize = new Sequelize(
     dbConfig.password,
     {
         host: dbConfig.host,
-        models: [userModel] ,
+        models: [jobModel, userModel] ,
         dialect: dbConfig.dialect as Dialect,
         pool: {
             max: dbConfig.pool.max,
@@ -24,6 +25,8 @@ let db = {
     Sequelize,
     sequelize,
 }
+userModel.hasMany(jobModel, {foreignKey: 'User_ID'})
+jobModel.belongsTo(userModel, {foreignKey: 'User_ID'})
 
 export default db
 
