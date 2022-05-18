@@ -5,6 +5,7 @@ export enum category {
     Part_Time = 'Part Time',
     Remote = 'Remote'
 }
+
 export interface IJobs {
     Jobs_ID?: number
     work_Title: string
@@ -16,17 +17,13 @@ export interface IJobs {
     apply_Method: string
     description: string
 }
-
-export type jobEntry = IJobs
-export type NotSensistiveInfoJobs = Omit<IJobs, 'User_ID' | 'owner_Email'>
-export type NewJobEntry = Omit<IJobs, 'Jobs_ID'>
 @Table(
     {
         tableName: 'jobs',
-        timestamps: false
+        timestamps: true
     }
 )
-export class jobModel extends Model implements IJobs {
+export default class Jobs extends Model implements IJobs {
 
     @Column({
         type: DataType.INTEGER,
@@ -41,7 +38,8 @@ export class jobModel extends Model implements IJobs {
         type: DataType.STRING(100)
     })
     work_Title!: string
-
+    
+    @NotEmpty
     @AllowNull(false)
     @Column({
         type: DataType.INTEGER

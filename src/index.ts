@@ -19,7 +19,7 @@ Press CTRL-C to stop`)
     db.sequelize.authenticate().then(async () => {
         console.log("database connected")
         try {
-            await db.sequelize.sync({ force: false })
+            await db.sequelize.sync({ force: true })
         } catch (error: any) {
             console.log(error.message)
         }
