@@ -1,8 +1,8 @@
 import { Dialect, } from 'sequelize'
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize, } from 'sequelize-typescript';
 import dbConfig from '../config/dbConfig'
 import userModel from './User.model'
-import jobModel from './Job.model'
+import { jobModel } from './Job.model'
 
 const sequelize = new Sequelize(
     dbConfig.database as string,
@@ -25,8 +25,8 @@ let db = {
     Sequelize,
     sequelize,
 }
-userModel.hasMany(jobModel, {foreignKey: 'User_ID'})
-jobModel.belongsTo(userModel, {foreignKey: 'User_ID'})
+/*userModel.hasMany(jobModel, {foreignKey: 'User_ID'})
+jobModel.belongsTo(userModel, {foreignKey: 'User_ID'})*/
 
 export default db
 
