@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-//import { jobModel } from "../models/Job.model";
 import * as Job from '../services/job.service'
 import { jobModel } from '../models/Job.model'
+import * as jobValidation from '../validations/job.validation'
 
 export const getJobs = async (_req: Request, res: Response) => {
     try {
@@ -16,7 +16,8 @@ export const getJobs = async (_req: Request, res: Response) => {
 
 export const newJobs = async (req: Request, res: Response) => {
     try {
-        const addedJob = await Job.addJobs(req.body)
+        const NewJobEntry = jobValidation.toNewWork(req.body)
+        const addedJob = await Job.addJobs(NewJobEntry)
         res.status(200).send(addedJob)
     } catch (e: any) {
         res.status(400).send(e.message)
@@ -27,16 +28,14 @@ export const editJob = async (req: Request, res: Response) => {
     try {
         const id = +req.params.id
         const job = await Job.editJobs(id, req.body)
-        if(+job == 1){
+        if (+job == 1) {
             res.status(200).send('Job Edit')
-        }else{
+        } else {
             res.status(400).send('Error')
         }
-        
     } catch (e: any) {
         res.status(400).send(e.message)
     }
-
 }
 
 export const findJob = async (req: Request, res: Response) => {
@@ -47,7 +46,6 @@ export const findJob = async (req: Request, res: Response) => {
     } catch (e: any) {
         res.status(400).send(e.message)
     }
-
 }
 
 export const deleteJob = async (req: Request, res: Response) => {
@@ -61,9 +59,7 @@ export const deleteJob = async (req: Request, res: Response) => {
                 res.status(400).send('Error')
             }
         })
-
     } catch (e: any) {
         res.status(400).send(e.message)
     }
-
 }
