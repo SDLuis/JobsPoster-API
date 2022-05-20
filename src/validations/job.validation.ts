@@ -1,55 +1,55 @@
 import { category, NewJobEntry } from '../models/Job.model'
-import { isString, isNumber, isCategory } from '../utils/utils'
+import { isString, isNumber, isCategory, notEmpty } from '../utils/utils'
 
 const parseWorkTitle = (workTitleFromRequest: any): string => {
-    if (!isString(workTitleFromRequest)) {
+    if (!isString(workTitleFromRequest) || notEmpty(workTitleFromRequest)) {
         throw new Error('Invalid Work title')
     }
     return workTitleFromRequest
 }
 const parseUserId = (userIdFromRequest: any): number => {
-    if (!isNumber(userIdFromRequest)) {
+    if (!isNumber(userIdFromRequest) || notEmpty(userIdFromRequest)) {
         throw new Error('Invalid User_ID')
     }
     return userIdFromRequest
 }
 const parseOwnerEmail = (ownerEmailFromRequest: any): string => {
-    if (!isString(ownerEmailFromRequest)) {
+    if (!isString(ownerEmailFromRequest) || notEmpty(ownerEmailFromRequest)) {
         throw new Error('Invalid Email')
     }
     return ownerEmailFromRequest
 }
 
 const parseJobURL = (jobURL: any): string => {
-    if (!isString(jobURL)) {
+    if (!isString(jobURL) || notEmpty(jobURL)) {
         throw new Error('Invalid URL')
     }
     return jobURL
 }
 
 const parseWorkType = (workTypeFromRequest: any): category => {
-    if (!isString(workTypeFromRequest) || !isCategory(workTypeFromRequest)) {
+    if (!isString(workTypeFromRequest) || !isCategory(workTypeFromRequest) || notEmpty(workTypeFromRequest)) {
         throw new Error('Invalid Work Type')
     }
     return workTypeFromRequest
 }
 
 const parsePosition = (positionFromRequest: any): string => {
-    if (!isString(positionFromRequest)) {
+    if (!isString(positionFromRequest) || notEmpty(positionFromRequest)) {
         throw new Error('Invalid Position')
     }
     return positionFromRequest
 }
 
 const parseApplyMethod = (applyMethodFromRequest: any): string => {
-    if (!isString(applyMethodFromRequest)) {
+    if (!isString(applyMethodFromRequest) || notEmpty(applyMethodFromRequest)) {
         throw new Error('Invalid Apply Method')
     }
     return applyMethodFromRequest
 }
 
 const parseDescription = (descriptionFromRequest: any): string => {
-    if (!isString(descriptionFromRequest)) {
+    if (!isString(descriptionFromRequest) || notEmpty(descriptionFromRequest)) {
         throw new Error('Invalid Description')
     }
     return descriptionFromRequest

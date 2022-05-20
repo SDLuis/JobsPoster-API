@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import * as Job from '../services/job.service'
+import * as jobService from '../services/job.service'
 import { jobModel } from '../models/Job.model'
 import * as jobValidation from '../validations/job.validation'
 
 export const getJobs = async (_req: Request, res: Response) => {
     try {
         await jobModel.findAll().then(result => {
-            res.send(Job.getJobs(result))
+            res.send(jobService.getJobs(result))
         })
         res.send()
     } catch (e: any) {
@@ -17,7 +17,7 @@ export const getJobs = async (_req: Request, res: Response) => {
 export const newJobs = async (req: Request, res: Response) => {
     try {
         const NewJobEntry = jobValidation.toNewWork(req.body)
-        const addedJob = await Job.addJobs(NewJobEntry)
+        const addedJob = await jobService.addJobs(NewJobEntry)
         res.status(200).send(addedJob)
     } catch (e: any) {
         res.status(400).send(e.message)
@@ -27,7 +27,7 @@ export const newJobs = async (req: Request, res: Response) => {
 export const editJob = async (req: Request, res: Response) => {
     try {
         const id = +req.params.id
-        const job = await Job.editJobs(id, req.body)
+        const job = await jobService.editJobs(id, req.body)
         if (+job == 1) {
             res.status(200).send('Job Edit')
         } else {
@@ -41,7 +41,7 @@ export const editJob = async (req: Request, res: Response) => {
 export const findJob = async (req: Request, res: Response) => {
     try {
         const id = +req.params.id
-        const job = await Job.findJob(id)
+        const job = await jobService.findJob(id)
         res.status(200).send(job)
     } catch (e: any) {
         res.status(400).send(e.message)
@@ -51,7 +51,7 @@ export const findJob = async (req: Request, res: Response) => {
 export const deleteJob = async (req: Request, res: Response) => {
     try {
         const id = +req.params.id
-        await Job.deleteJob(id)?.then(result => {
+        await jobService.deleteJob(id)?.then(result => {
             if (result == 1) {
                 res.status(200).send('Job deleted')
             }

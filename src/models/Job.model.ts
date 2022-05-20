@@ -6,7 +6,7 @@ export enum category {
     Remote = 'Remote'
 }
 export interface IJobs {
-    Jobs_ID?: number
+    Job_ID?: number
     work_Title: string
     User_ID?: number
     owner_Email: string
@@ -19,7 +19,7 @@ export interface IJobs {
 
 export type jobEntry = IJobs
 export type NotSensistiveInfoJobs = Omit<IJobs, 'User_ID' | 'owner_Email'>
-export type NewJobEntry = Omit<IJobs, 'Jobs_ID'>
+export type NewJobEntry = Omit<IJobs, 'Job_ID'>
 @Table(
     {
         tableName: 'jobs',
@@ -33,7 +33,7 @@ export class jobModel extends Model implements IJobs {
         primaryKey: true,
         autoIncrement: true
     })
-    Jobs_ID: number | undefined
+    Job_ID: number | undefined
 
     @NotEmpty
     @AllowNull(false)

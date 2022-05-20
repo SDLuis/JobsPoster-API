@@ -1,7 +1,7 @@
 import { Dialect, } from 'sequelize'
 import { Sequelize, } from 'sequelize-typescript';
 import dbConfig from '../config/dbConfig'
-import userModel from './User.model'
+import { userModel }from './User.model'
 import { jobModel } from './Job.model'
 
 const sequelize = new Sequelize(

@@ -7,12 +7,16 @@ export enum role {
 }
 export interface IUser {
     User_ID?: number | null
-    first_name: string
-    last_name: string
+    First_Name: string
+    Last_Name: string
     role: role,
     email: string
     password: string
 }
+
+export type userEntry = IUser
+export type NotSensistiveInfoUser = Omit<IUser, 'User_ID' | 'password'>
+export type NewUserEntry = Omit<IUser, 'User_ID'>
 @Table(
     {
         tableName: 'user',
@@ -20,7 +24,7 @@ export interface IUser {
     }
 )
 
-export default class User extends Model implements IUser {
+export class userModel extends Model implements IUser {
 
     @Column({
         type: DataType.INTEGER,
@@ -34,14 +38,14 @@ export default class User extends Model implements IUser {
     @Column({
         type: DataType.STRING(100)
     })
-    first_name!: string
+    First_Name!: string
 
     @NotEmpty
     @AllowNull(false)
     @Column({
         type: DataType.STRING(100)
     })
-    last_name!: string
+    Last_Name!: string
 
     @NotEmpty
     @AllowNull(false)
