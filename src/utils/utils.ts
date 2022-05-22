@@ -1,8 +1,8 @@
-import {category} from '../models/Job.model'
+import { category } from '../models/Job.model'
 import { role } from '../models/User.model'
 
 export const isString = (string: string): boolean => {
-    return  typeof string === 'string'
+    return typeof string === 'string'
 }
 
 export const notEmpty = (param: any): boolean => {

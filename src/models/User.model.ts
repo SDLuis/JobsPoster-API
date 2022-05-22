@@ -1,4 +1,4 @@
-import { Column, DataType, Model, NotEmpty, Table, AllowNull } from "sequelize-typescript"
+import { Column, DataType, Model, NotEmpty, Table, AllowNull, Unique } from "sequelize-typescript"
 
 export enum role {
     Admin = 'admin',
@@ -10,6 +10,11 @@ export interface IUser {
     First_Name: string
     Last_Name: string
     role: role,
+    email: string
+    password: any
+}
+
+export type login = {
     email: string
     password: string
 }
@@ -54,6 +59,7 @@ export class userModel extends Model implements IUser {
     })
     role!: role
 
+    @Unique
     @NotEmpty
     @AllowNull(false)
     @Column({

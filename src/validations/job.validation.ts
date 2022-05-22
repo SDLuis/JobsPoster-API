@@ -57,14 +57,14 @@ const parseDescription = (descriptionFromRequest: any): string => {
 
 export const toNewWork = (object: any): NewJobEntry => {
     const newJob: NewJobEntry = {
-       work_Title: parseWorkTitle(object.work_Title),
-       User_ID: parseUserId(object.User_ID),
-       owner_Email: parseOwnerEmail(object.owner_Email),
-       Job_URL: parseJobURL(object.Job_URL),
-       workType: parseWorkType(object.workType),
-       Position: parsePosition(object.Position),
-       apply_Method: parseApplyMethod(object.apply_Method),
-       description: parseDescription(object.description),
+        work_Title: parseWorkTitle(object.work_Title),
+        User_ID: parseUserId(object.User_ID),
+        owner_Email: parseOwnerEmail(object.owner_Email),
+        Job_URL: parseJobURL(object.Job_URL),
+        workType: parseWorkType(object.workType),
+        Position: parsePosition(object.Position),
+        apply_Method: parseApplyMethod(object.apply_Method),
+        description: parseDescription(object.description),
     }
     return newJob
 }

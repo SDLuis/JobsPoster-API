@@ -1,23 +1,13 @@
 import { Request, Response } from "express";
 import * as userService from '../services/user.service'
 import { userModel } from "../models/User.model";
-import * as userValidation from '../validations/user.validation'
+
 
 export const getUser = async (_req: Request, res: Response) => {
     try {
-        await await userModel.findAll().then(result => {
+        await userModel.findAll().then(result => {
             res.status(200).send(userService.getUsersWithoutSensitiveInfo(result))
         })
-    } catch (e: any) {
-        res.status(400).send(e.message)
-    }
-}
-
-export const newUser = async (req: Request, res: Response) => {
-    try {
-        const NewUserEntry = userValidation.toNewUser(req.body)
-        const addedUser = await userService.addUser(NewUserEntry)
-        res.status(200).send(addedUser)
     } catch (e: any) {
         res.status(400).send(e.message)
     }
@@ -26,7 +16,7 @@ export const newUser = async (req: Request, res: Response) => {
 export const editUser = async (req: Request, res: Response) => {
     try {
         const id = +req.params.id
-        const User = await userService.editUsers(id, req.body)
+        const User = await userService.editUser(id, req.body)
         if (+User == 1) {
             res.status(200).send('User Edit')
         } else {
@@ -34,7 +24,7 @@ export const editUser = async (req: Request, res: Response) => {
         }
     } catch (e: any) {
         res.status(400).send(e.message)
-        
+
     }
 }
 

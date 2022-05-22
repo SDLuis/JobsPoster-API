@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import * as jobService from '../services/job.service'
 import { jobModel } from '../models/Job.model'
 import * as jobValidation from '../validations/job.validation'
+import { userModel } from "../models/User.model";
 
 export const getJobs = async (_req: Request, res: Response) => {
     try {
-        await jobModel.findAll().then(result => {
+        await jobModel.findAll({ include: { model: userModel, attributes: { exclude: ['password'] } } }).then(result => {
             res.send(jobService.getJobs(result))
         })
         res.send()
@@ -14,7 +15,7 @@ export const getJobs = async (_req: Request, res: Response) => {
     }
 }
 
-export const newJobs = async (req: Request, res: Response) => {
+export const newJob = async (req: Request, res: Response) => {
     try {
         const NewJobEntry = jobValidation.toNewWork(req.body)
         const addedJob = await jobService.addJobs(NewJobEntry)

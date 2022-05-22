@@ -1,27 +1,19 @@
 import '../models/db.model'
-import {userModel ,userEntry, NotSensistiveInfoUser, NewUserEntry} from '../models/User.model'
+import { userModel, userEntry, NotSensistiveInfoUser, NewUserEntry } from '../models/User.model'
 
-export const getUser = (Users: userEntry[]): userEntry[] => {
+export const getUsers = (Users: userEntry[]): userEntry[] => {
     return Users
 }
 
 export const getUsersWithoutSensitiveInfo = (Jobs: NotSensistiveInfoUser[]): NotSensistiveInfoUser[] => {
-    return Jobs.map(({First_Name, Last_Name, role, email}) => {
+    return Jobs.map(({ First_Name, Last_Name, role, email }) => {
         return {
             First_Name, Last_Name, role, email
         }
     })
 }
 
-export const addUser = (newUserEntry: NewUserEntry): NewUserEntry => {
-    const newUser = {
-        ...newUserEntry
-    }
-    userModel.create(newUser)
-    return newUser
-}
-
-export const editUsers = async (id: number, newUserEntry: NewUserEntry[]): Promise<number> => {
+export const editUser = async (id: number, newUserEntry: NewUserEntry[]): Promise<number> => {
     const result = await userModel.update(newUserEntry, { where: { 'User_ID': id } }).then(result => {
         return result
     })
