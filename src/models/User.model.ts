@@ -29,7 +29,7 @@ export interface IDecoded {
 }
 
 export type userEntry = IUser
-export type NotSensistiveInfoUser = Omit<IUser, 'User_ID' | 'password'>
+export type NotSensistiveInfoUser = Omit<IUser, 'password'>
 export type NewUserEntry = Omit<IUser, 'User_ID'>
 @Table(
     {

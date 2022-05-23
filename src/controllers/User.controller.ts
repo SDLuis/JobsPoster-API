@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import * as userService from '../services/user.service'
 import { userModel } from "../models/User.model";
 

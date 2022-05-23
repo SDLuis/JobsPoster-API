@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 import * as authService from '../services/auth.service'
 import * as userValidation from '../validations/user.validation'
 import * as authValidation from '../validations/auth.validations'

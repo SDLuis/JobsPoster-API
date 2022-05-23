@@ -6,9 +6,9 @@ export const getUsers = (Users: userEntry[]): userEntry[] => {
 }
 
 export const getUsersWithoutSensitiveInfo = (Jobs: NotSensistiveInfoUser[]): NotSensistiveInfoUser[] => {
-    return Jobs.map(({ First_Name, Last_Name, role, email }) => {
+    return Jobs.map(({User_ID, First_Name, Last_Name, role, email }) => {
         return {
-            First_Name, Last_Name, role, email
+            User_ID, First_Name, Last_Name, role, email
         }
     })
 }

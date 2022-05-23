@@ -55,7 +55,7 @@ export const auth = async (token: string): Promise<NotSensistiveInfoUser | strin
         if (!decoded) {
             return 'unauthenticated'
         } else {
-            const user = await userModel.findOne({ where: { User_ID: decoded.id }, attributes: { exclude: ['password', 'User_ID'] } }) as NotSensistiveInfoUser
+            const user = await userModel.findOne({ where: { User_ID: decoded.id }, attributes: { exclude: ['password'] } }) as NotSensistiveInfoUser
             return user
         }
     } catch (e: any) {

@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 import * as jobService from '../services/job.service'
 import { jobModel } from '../models/Job.model'
 import * as jobValidation from '../validations/job.validation'
-import { userModel } from "../models/User.model";
+import { CustomRequest, userModel } from "../models/User.model";
 
 export const getJobs = async (_req: Request, res: Response) => {
     try {
@@ -16,7 +16,7 @@ export const getJobs = async (_req: Request, res: Response) => {
 
 export const newJob = async (req: Request, res: Response) => {
     try {
-        const NewJobEntry = jobValidation.toNewWork(req.body)
+        const NewJobEntry = jobValidation.toNewWork(req.body, (req as any).token.User_ID)
         const addedJob = await jobService.addJobs(NewJobEntry)
         res.status(200).send(addedJob)
     } catch (e: any) {
@@ -59,6 +59,17 @@ export const deleteJob = async (req: Request, res: Response) => {
                 res.status(400).send('Error')
             }
         })
+    } catch (e: any) {
+        res.status(400).send(e.message)
+    }
+}
+
+export const reqJob = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = +req.params.id
+        const job = await jobService.findJob(id) as any
+        (req as any as CustomRequest).json = job
+        next()
     } catch (e: any) {
         res.status(400).send(e.message)
     }

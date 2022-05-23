@@ -20,16 +20,16 @@ export const addJobs = (newJobsEntry: NewJobEntry): NewJobEntry => {
 }
 
 export const editJobs = async (id: number, newJobEntry: NewJobEntry): Promise<number> => {
-    const result = await jobModel.update(newJobEntry, { where: { 'Jobs_ID': id } }).then(result => {
+    const result = await jobModel.update(newJobEntry, { where: { 'Job_ID': id } }).then(result => {
         return result
     })
     return +result
 }
 
 export const findJob = (id: number): Promise<jobEntry[]> | undefined => {
-    return jobModel.findOne({ where: { 'Jobs_ID': id } }) as any
+    return jobModel.findOne({ where: { 'Job_ID': id } }) as any
 }
 
 export const deleteJob = (id: number): Promise<number> | undefined => {
-    return jobModel.destroy({ where: { 'Jobs_ID': id } }) as any
+    return jobModel.destroy({ where: { 'Job_ID': id } }) as any
 }
