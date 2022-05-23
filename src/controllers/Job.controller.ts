@@ -9,7 +9,6 @@ export const getJobs = async (_req: Request, res: Response) => {
         await jobModel.findAll({ include: { model: userModel, attributes: { exclude: ['password'] } } }).then(result => {
             res.send(jobService.getJobs(result))
         })
-        res.send()
     } catch (e: any) {
         res.status(400).send(e.message)
     }

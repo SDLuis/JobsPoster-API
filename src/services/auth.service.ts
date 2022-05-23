@@ -1,7 +1,7 @@
 import '../models/db.model'
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
-import { userModel, userEntry, NewUserEntry } from '../models/User.model'
+import { userModel, userEntry, NewUserEntry, IDecoded, NotSensistiveInfoUser } from '../models/User.model'
 import authConfig from '../config/authConfig'
 
 export const getUser = (Users: userEntry[]): userEntry[] => {
@@ -16,18 +16,17 @@ export const addUser = async (newUserEntry: NewUserEntry): Promise<NewUserEntry>
         email: newUserEntry.email,
         password: await bcrypt.hash(newUserEntry.password.toString(), +authConfig.rounds)
     }
-    console.log(newUser.password)
     userModel.create(newUser)
     return newUser
 }
 
-export const Login = async (authParams: any): Promise<any | undefined> => {
+export const Login = async (authParams: any): Promise<string | Error | undefined> => {
     try {
         const user = await userModel.findOne({ where: { 'email': authParams.email } })
         if (user) {
             const valid_password = await bcrypt.compare(authParams.password.toString(), user.password)
             if (valid_password) {
-                const token = jsonwebtoken.sign({ user: user }, authConfig.secret, {
+                const token = jsonwebtoken.sign({ id: user.User_ID }, authConfig.secret, {
                     expiresIn: '9h'
                 });
                 return token
@@ -46,6 +45,20 @@ export const Login = async (authParams: any): Promise<any | undefined> => {
             return Error
         }
     } catch (e: any) {
-        console.log(e.message)
+        return e.message
+    }
+}
+
+export const auth = async (token: string): Promise<NotSensistiveInfoUser | string | undefined> => {
+    try {
+        const decoded = await jsonwebtoken.verify(token, authConfig.secret) as IDecoded
+        if (!decoded) {
+            return 'unauthenticated'
+        } else {
+            const user = await userModel.findOne({ where: { User_ID: decoded.id }, attributes: { exclude: ['password', 'User_ID'] } }) as NotSensistiveInfoUser
+            return user
+        }
+    } catch (e: any) {
+        return e.message
     }
 }

@@ -1,5 +1,5 @@
 import { Column, DataType, Model, NotEmpty, Table, AllowNull, Unique } from "sequelize-typescript"
-
+import { JwtPayload } from 'jsonwebtoken'
 export enum role {
     Admin = 'admin',
     Poster = 'poster',
@@ -17,6 +17,15 @@ export interface IUser {
 export type login = {
     email: string
     password: string
+}
+export interface CustomRequest extends Request {
+    token: string | JwtPayload
+}
+
+export interface IDecoded {
+    id: number,
+    iat: number,
+    exp: number
 }
 
 export type userEntry = IUser

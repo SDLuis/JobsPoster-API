@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import * as authService from '../services/auth.service'
 import * as userValidation from '../validations/user.validation'
 import * as authValidation from '../validations/auth.validations'
+import { CustomRequest } from '../models/User.model'
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -33,5 +34,19 @@ export const login = async (req: Request, res: Response) => {
     } catch (e: any) {
         res.status(400).send(e.message)
     }
+}
 
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const token = req.cookies['jwt']
+        if (!token) {
+            res.status(400).send('unaunthenticated')
+        } else {
+            const response = await authService.auth(token) as any
+            (req as any as CustomRequest).token = response.dataValues
+            next()
+        }
+    } catch (e: any) {
+        res.status(400).send('Something went wrong')
+    }
 }

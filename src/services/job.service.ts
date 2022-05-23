@@ -33,5 +33,3 @@ export const findJob = (id: number): Promise<jobEntry[]> | undefined => {
 export const deleteJob = (id: number): Promise<number> | undefined => {
     return jobModel.destroy({ where: { 'Jobs_ID': id } }) as any
 }
-
-
