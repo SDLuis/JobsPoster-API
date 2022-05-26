@@ -5,9 +5,9 @@ export const getJobs = (Jobs: jobEntry[]): jobEntry[] => {
     return Jobs
 }
 export const getJobsWithoutSensitiveInfo = (jobs: NotSensistiveInfoJobs[]): NotSensistiveInfoJobs[] => {
-    return jobs.map(({ Job_ID, work_Title, Job_URL, workType, Position, apply_Method, description }) => {
+    return jobs.map(({ Job_ID, work_Title, workType, Position, apply_Method, description }) => {
         return {
-            Job_ID, work_Title, Job_URL, workType, Position, apply_Method, description
+            Job_ID, work_Title, workType, Position, apply_Method, description
         }
     })
 }

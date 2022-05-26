@@ -20,13 +20,6 @@ const parseOwnerEmail = (ownerEmailFromRequest: any): string => {
     return ownerEmailFromRequest
 }
 
-const parseJobURL = (jobURL: any): string => {
-    if (!isString(jobURL) || notEmpty(jobURL)) {
-        throw new Error('Invalid URL')
-    }
-    return jobURL
-}
-
 const parseWorkType = (workTypeFromRequest: any): category => {
     if (!isString(workTypeFromRequest) || !isCategory(workTypeFromRequest) || notEmpty(workTypeFromRequest)) {
         throw new Error('Invalid Work Type')
@@ -55,12 +48,11 @@ const parseDescription = (descriptionFromRequest: any): string => {
     return descriptionFromRequest
 }
 
-export const toNewWork = (object: any, userIdFromRequest: any): NewJobEntry => {
+export const toNewWork = (object: any, userIdFromRequest: any, emailFromRequest: any): NewJobEntry => {
     const newJob: NewJobEntry = {
         work_Title: parseWorkTitle(object.work_Title),
         User_ID: parseUserId(userIdFromRequest),
-        owner_Email: parseOwnerEmail(object.owner_Email),
-        Job_URL: parseJobURL(object.Job_URL),
+        owner_Email: parseOwnerEmail(emailFromRequest),
         workType: parseWorkType(object.workType),
         Position: parsePosition(object.Position),
         apply_Method: parseApplyMethod(object.apply_Method),

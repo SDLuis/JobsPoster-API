@@ -10,7 +10,6 @@ export interface IJobs {
     work_Title: string
     User_ID?: number
     owner_Email: string
-    Job_URL: string
     workType: category
     Position: string
     apply_Method: string
@@ -55,13 +54,6 @@ export class jobModel extends Model implements IJobs {
         type: DataType.STRING(100)
     })
     owner_Email!: string
-
-    @NotEmpty
-    @AllowNull(false)
-    @Column({
-        type: DataType.STRING(100)
-    })
-    Job_URL!: string
 
     @NotEmpty
     @AllowNull(false)
