@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const middlewares_1 = __importDefault(require("./libs/middlewares"));
 const db_model_1 = __importDefault(require("./models/db.model"));
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 middlewares_1.default.listen(PORT, () => {
     console.log(`App is running at http://localhost:${PORT} in development mode
 Press CTRL-C to stop`);
