@@ -8,6 +8,7 @@ router.get('/', jobsContoller.getJobs)
 router.post('/add',authController.auth, policies.posterAccess, jobsContoller.newJob)
 router.put('/edit/:id',authController.auth, jobsContoller.reqJob, policies.ownerAccess ,jobsContoller.editJob)
 router.get('/:id', jobsContoller.findJob)
+router.get('/:category/list', jobsContoller.findJobByCategory)
 router.delete('/delete/:id',authController.auth, jobsContoller.reqJob, policies.ownerAccess, jobsContoller.deleteJob)
 
 export default router

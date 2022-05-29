@@ -30,6 +30,10 @@ export const findJob = (id: number): Promise<jobEntry[]> | undefined => {
     return jobModel.findOne({ where: { 'Job_ID': id } }) as any
 }
 
+export const findJobByCategory = (category: string): Promise<jobEntry[]> | undefined => {
+    return jobModel.findOne({ where: { 'workType': category } }) as any
+}
+
 export const deleteJob = (id: number): Promise<number> | undefined => {
     return jobModel.destroy({ where: { 'Job_ID': id } }) as any
 }

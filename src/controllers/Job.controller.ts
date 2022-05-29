@@ -48,6 +48,16 @@ export const findJob = async (req: Request, res: Response) => {
     }
 }
 
+export const findJobByCategory = async (req: Request, res: Response) => {
+    try {
+        const category = req.params.category
+        const job = await jobService.findJobByCategory(category)
+        res.status(200).send(job)
+    } catch (e: any) {
+        res.status(400).send(e.message)
+    }
+}
+
 export const deleteJob = async (req: Request, res: Response) => {
     try {
         const id = +req.params.id
