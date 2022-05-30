@@ -8,16 +8,30 @@ export const getUser = (Users: userEntry[]): userEntry[] => {
     return Users
 }
 
-export const addUser = async (newUserEntry: NewUserEntry): Promise<NewUserEntry> => {
-    const newUser = {
-        First_Name: newUserEntry.First_Name,
-        Last_Name: newUserEntry.Last_Name,
-        role: newUserEntry.role,
-        email: newUserEntry.email,
-        password: await bcrypt.hash(newUserEntry.password.toString(), +authConfig.rounds)
+export const addUser = async (newUserEntry: NewUserEntry): Promise<NewUserEntry | Error> => {
+    try {
+        const newUser = {
+            First_Name: newUserEntry.First_Name,
+            Last_Name: newUserEntry.Last_Name,
+            role: 'poster',
+            email: newUserEntry.email,
+            password: await bcrypt.hash(newUserEntry.password.toString(), +authConfig.rounds)
+        }
+        const user = await userModel.findOne({ where: { 'email': newUser.email } })
+        if (user) {
+            const Error: Error = {
+                name: 'Email always exist',
+                message: ('This email is not available')
+            }
+            return Error
+        } else {
+            userModel.create(newUser)
+            return newUser
+        }
+
+    } catch (e: any) {
+        return e.message
     }
-    userModel.create(newUser)
-    return newUser
 }
 
 export const Login = async (authParams: any): Promise<string | Error | undefined> => {

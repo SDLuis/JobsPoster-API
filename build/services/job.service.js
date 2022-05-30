@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteJob = exports.findJob = exports.editJobs = exports.addJobs = exports.getJobsWithoutSensitiveInfo = exports.getJobs = void 0;
+exports.deleteJob = exports.findJobByCategory = exports.findJob = exports.editJobs = exports.addJobs = exports.getJobsWithoutSensitiveInfo = exports.getJobs = void 0;
 require("../models/db.model");
 const Job_model_1 = require("../models/Job.model");
 const getJobs = (Jobs) => {
@@ -41,6 +41,10 @@ const findJob = (id) => {
     return Job_model_1.jobModel.findOne({ where: { 'Job_ID': id } });
 };
 exports.findJob = findJob;
+const findJobByCategory = (category) => {
+    return Job_model_1.jobModel.findOne({ where: { 'workType': category } });
+};
+exports.findJobByCategory = findJobByCategory;
 const deleteJob = (id) => {
     return Job_model_1.jobModel.destroy({ where: { 'Job_ID': id } });
 };

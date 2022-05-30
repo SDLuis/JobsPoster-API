@@ -7,8 +7,8 @@ import { CustomRequest } from '../models/User.model'
 export const register = async (req: Request, res: Response) => {
     try {
         const NewUserEntry = userValidation.toNewUser(req.body)
-        const addedUser = await authService.addUser(NewUserEntry)
-        res.status(200).send(addedUser)
+        const response = await authService.addUser(NewUserEntry)
+        res.status(200).send(response)
     } catch (e: any) {
         res.status(400).send(e.message)
     }
@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
             res.status(200).send('U RE LOGED')
         } else {
             return (response != undefined)
-                ? res.status(400).send(response.message)
+                ? res.send(response)
                 : res.status(400).send('Something went wrong :((')
         }
 

@@ -17,10 +17,12 @@ app.use((0, morgan_1.default)('dev'));
 app.use('/jobs', Job_route_1.default);
 app.use('/users', User_route_1.default);
 app.use('/auth', Auth_route_1.default);
-app.use((0, cors_1.default)({
-    credentials: true,
-    origin: ['http://localhost:5000', 'http://localhost:8080', 'http://localhost:8081', 'http://localhost:4200'],
-}));
+app.use((0, cors_1.default)());
+app.use(function (_req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.get('/', (_req, res) => {
     res.status(200).send('WELCOME!!');
 });

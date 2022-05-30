@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reqJob = exports.deleteJob = exports.findJob = exports.editJob = exports.newJob = exports.getJobs = void 0;
+exports.reqJob = exports.deleteJob = exports.findJobByCategory = exports.findJob = exports.editJob = exports.newJob = exports.getJobs = void 0;
 const jobService = __importStar(require("../services/job.service"));
 const Job_model_1 = require("../models/Job.model");
 const jobValidation = __importStar(require("../validations/job.validation"));
@@ -86,6 +86,17 @@ const findJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.findJob = findJob;
+const findJobByCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const category = req.params.category;
+        const job = yield jobService.findJobByCategory(category);
+        res.status(200).send(job);
+    }
+    catch (e) {
+        res.status(400).send(e.message);
+    }
+});
+exports.findJobByCategory = findJobByCategory;
 const deleteJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
