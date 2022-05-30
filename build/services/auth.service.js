@@ -23,15 +23,30 @@ const getUser = (Users) => {
 };
 exports.getUser = getUser;
 const addUser = (newUserEntry) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = {
-        First_Name: newUserEntry.First_Name,
-        Last_Name: newUserEntry.Last_Name,
-        role: newUserEntry.role,
-        email: newUserEntry.email,
-        password: yield bcrypt_1.default.hash(newUserEntry.password.toString(), +authConfig_1.default.rounds)
-    };
-    User_model_1.userModel.create(newUser);
-    return newUser;
+    try {
+        const newUser = {
+            First_Name: newUserEntry.First_Name,
+            Last_Name: newUserEntry.Last_Name,
+            role: 'poster',
+            email: newUserEntry.email,
+            password: yield bcrypt_1.default.hash(newUserEntry.password.toString(), +authConfig_1.default.rounds)
+        };
+        const user = yield User_model_1.userModel.findOne({ where: { 'email': newUser.email } });
+        if (user) {
+            const Error = {
+                name: 'Email always exist',
+                message: ('This email is not available')
+            };
+            return Error;
+        }
+        else {
+            User_model_1.userModel.create(newUser);
+            return newUser;
+        }
+    }
+    catch (e) {
+        return e.message;
+    }
 });
 exports.addUser = addUser;
 const Login = (authParams) => __awaiter(void 0, void 0, void 0, function* () {

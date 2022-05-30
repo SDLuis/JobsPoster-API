@@ -42,7 +42,7 @@ const findJob = (id) => {
 };
 exports.findJob = findJob;
 const findJobByCategory = (category) => {
-    return Job_model_1.jobModel.findOne({ where: { 'workType': category } });
+    return Job_model_1.jobModel.findAll({ where: { 'workType': category } });
 };
 exports.findJobByCategory = findJobByCategory;
 const deleteJob = (id) => {

@@ -39,8 +39,8 @@ const authValidation = __importStar(require("../validations/auth.validations"));
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const NewUserEntry = userValidation.toNewUser(req.body);
-        const addedUser = yield authService.addUser(NewUserEntry);
-        res.status(200).send(addedUser);
+        const response = yield authService.addUser(NewUserEntry);
+        res.status(200).send(response);
     }
     catch (e) {
         res.status(400).send(e.message);
@@ -61,7 +61,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         else {
             return (response != undefined)
-                ? res.status(400).send(response.message)
+                ? res.send(response)
                 : res.status(400).send('Something went wrong :((');
         }
     }

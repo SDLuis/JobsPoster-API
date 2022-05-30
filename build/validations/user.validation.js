@@ -14,12 +14,6 @@ const parseLastName = (LastNameFromRequest) => {
     }
     return LastNameFromRequest;
 };
-const parseRole = (roleFromRequest) => {
-    if (!(0, utils_1.isString)(roleFromRequest) || !(0, utils_1.isRole)(roleFromRequest) || (0, utils_1.notEmpty)(roleFromRequest)) {
-        throw new Error('Invalid Role');
-    }
-    return roleFromRequest;
-};
 const parseEmail = (emailFromRequest) => {
     if (!(0, utils_1.isString)(emailFromRequest) || (0, utils_1.notEmpty)(emailFromRequest)) {
         throw new Error('Invalid Email');
@@ -36,7 +30,6 @@ const toNewUser = (object) => {
     const newUser = {
         First_Name: parseFirstName(object.First_Name),
         Last_Name: parseLastName(object.Last_Name),
-        role: parseRole(object.role),
         email: parseEmail(object.email),
         password: parsePassword(object.password)
     };
