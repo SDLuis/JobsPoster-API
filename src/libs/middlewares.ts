@@ -7,7 +7,7 @@ import userRouter from '../routes/User.route'
 import authRouter from '../routes/Auth.route'
 
 const app = express();
-app.use(cors({credentials: true, origin: ['http://localhost:5000', 'http://localhost:8080', 'http://localhost:8081', 'http://localhost:3000', 'https://jobsposter.herokuapp.com/'],}))
+app.use(cors({credentials: true, origin: ['http://localhost:5000', 'http://localhost:8080', 'http://localhost:8081', 'http://localhost:3000', 'https://jobsposter.herokuapp.com'],}))
 app.use(express.json());
 app.use(cookieparser())
 app.use(morgan('dev'))
