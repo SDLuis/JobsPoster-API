@@ -48,11 +48,11 @@ const parseDescription = (descriptionFromRequest: any): string => {
     return descriptionFromRequest
 }
 
-export const toNewWork = (object: any, userIdFromRequest: any, emailFromRequest: any): NewJobEntry => {
+export const toNewWork = (object: any): NewJobEntry => {
     const newJob: NewJobEntry = {
         work_Title: parseWorkTitle(object.work_Title),
-        User_ID: parseUserId(userIdFromRequest),
-        owner_Email: parseOwnerEmail(emailFromRequest),
+        User_ID: parseUserId(1),
+        owner_Email: parseOwnerEmail("123@gmail.com"),
         workType: parseWorkType(object.workType),
         Position: parsePosition(object.Position),
         apply_Method: parseApplyMethod(object.apply_Method),
