@@ -16,7 +16,7 @@ export const getJobs = async (_req: Request, res: Response) => {
 
 export const newJob = async (req: Request, res: Response) => {
     try {
-        const NewJobEntry = jobValidation.toNewWork(req.body, (req as any).token.User_ID,(req as any).token.email )
+        const NewJobEntry = jobValidation.toNewWork(req.body)
         const addedJob = await jobService.addJobs(NewJobEntry)
         res.status(200).send(addedJob)
     } catch (e: any) {
