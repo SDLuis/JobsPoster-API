@@ -13,7 +13,7 @@ export const addUser = async (newUserEntry: NewUserEntry): Promise<NewUserEntry 
         const newUser = {
             First_Name: newUserEntry.First_Name,
             Last_Name: newUserEntry.Last_Name,
-            role: 'admin',
+            role: 'poster',
             email: newUserEntry.email,
             password: await bcrypt.hash(newUserEntry.password.toString(), +authConfig.rounds)
         }
