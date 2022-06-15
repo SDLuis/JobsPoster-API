@@ -1,4 +1,4 @@
-import app from './libs/middlewares';
+import app from "./libs/middlewares";
 import db from "./models/db.model";
 
 const PORT = process.env.PORT || 5000;

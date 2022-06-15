@@ -1,86 +1,89 @@
-import { Column, DataType, Model, NotEmpty, Table, AllowNull, Unique } from "sequelize-typescript"
-import { JwtPayload } from 'jsonwebtoken'
+import {
+  Column,
+  DataType,
+  Model,
+  NotEmpty,
+  Table,
+  AllowNull,
+  Unique,
+} from "sequelize-typescript";
+import { JwtPayload } from "jsonwebtoken";
 export enum role {
-    Admin = 'admin',
-    Poster = 'poster',
-    Visitor = 'visitor'
+  Admin = "admin",
+  Poster = "poster",
+  Visitor = "visitor",
 }
 export interface IUser {
-    User_ID?: number | null
-    First_Name: string
-    Last_Name: string
-    role: role,
-    email: string
-    password: any
+  User_ID?: number | null;
+  First_Name: string;
+  Last_Name: string;
+  role: role;
+  email: string;
+  password: any;
 }
 
 export type login = {
-    email: string
-    password: string
-}
+  email: string;
+  password: string;
+};
 export interface CustomRequest extends Request {
-    token: string | JwtPayload
+  token: string | JwtPayload;
 }
 
 export interface IDecoded {
-    id: number,
-    iat: number,
-    exp: number
+  id: number;
+  iat: number;
+  exp: number;
 }
 
-export type userEntry = IUser
-export type NotSensistiveInfoUser = Omit<IUser, 'password'>
-export type NewUserEntry = Omit<IUser, 'User_ID' | 'role'>
-@Table(
-    {
-        tableName: 'user',
-        timestamps: false
-    }
-)
-
+export type userEntry = IUser;
+export type NotSensistiveInfoUser = Omit<IUser, "password">;
+export type NewUserEntry = Omit<IUser, "User_ID" | "role">;
+@Table({
+  tableName: "user",
+  timestamps: false,
+})
 export class userModel extends Model implements IUser {
+  @Column({
+    type: DataType.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  })
+  User_ID: number | null | undefined;
 
-    @Column({
-        type: DataType.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    })
-    User_ID: number | null | undefined
+  @NotEmpty
+  @AllowNull(false)
+  @Column({
+    type: DataType.STRING(100),
+  })
+  First_Name!: string;
 
-    @NotEmpty
-    @AllowNull(false)
-    @Column({
-        type: DataType.STRING(100)
-    })
-    First_Name!: string
+  @NotEmpty
+  @AllowNull(false)
+  @Column({
+    type: DataType.STRING(100),
+  })
+  Last_Name!: string;
 
-    @NotEmpty
-    @AllowNull(false)
-    @Column({
-        type: DataType.STRING(100)
-    })
-    Last_Name!: string
+  @NotEmpty
+  @AllowNull(false)
+  @Column({
+    type: DataType.STRING(100),
+  })
+  role!: role;
 
-    @NotEmpty
-    @AllowNull(false)
-    @Column({
-        type: DataType.STRING(100)
-    })
-    role!: role
+  @Unique
+  @NotEmpty
+  @AllowNull(false)
+  @Column({
+    type: DataType.STRING(100),
+  })
+  email!: string;
 
-    @Unique
-    @NotEmpty
-    @AllowNull(false)
-    @Column({
-        type: DataType.STRING(100)
-    })
-    email!: string
-
-    @NotEmpty
-    @AllowNull(false)
-    @Column({
-        type: DataType.STRING(100)
-    })
-    password!: string
-
+  @NotEmpty
+  @AllowNull(false)
+  @Column({
+    type: DataType.STRING(100),
+  })
+  password!: string;
 }
