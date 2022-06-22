@@ -83,7 +83,7 @@ export class jobModel extends Model implements IJobs {
   @NotEmpty
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.STRING(1000),
   })
   description!: string;
 }
