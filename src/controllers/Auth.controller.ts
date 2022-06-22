@@ -20,11 +20,11 @@ export const login = async (req: Request, res: Response) => {
     const response = await authService.Login(paramsToLogin);
     if (typeof response == "string") {
       //WORKINGG!!!!!!!
-     // const token = response;
-    /*  res.cookie("jwt", token, {
+      const token = response;
+      res.cookie("jwt", token, {
         httpOnly: true,
         maxAge: 0o1 * 60 * 60 * 1000,
-      });*/
+      });
       res.status(200).send({"loggedMessage":'U RE LOGED', "data": response});
     } else {
       return response != undefined
@@ -37,7 +37,6 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.cookies["jwt"])
   try {
     const token = req.cookies["jwt"];
     if (!token) {
