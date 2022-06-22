@@ -37,6 +37,7 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.cookies["jwt"])
   try {
     const token = req.cookies["jwt"];
     if (!token) {
