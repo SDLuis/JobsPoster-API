@@ -98,8 +98,8 @@ export const reqJob = async (
 
 export const ownJob = async (req: Request, res: Response) => {
   try {
-    const id = (req as any).token.User_ID;
-    const job = (await jobService.ownJob(id)) as any;
+    //const id = (req as any).token.User_ID;
+    const job = (await jobService.ownJob(1)) as any;
     res.status(200).send(job);
   } catch (e: any) {
     res.status(400).send(e.message);
