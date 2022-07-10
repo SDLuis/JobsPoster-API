@@ -96,7 +96,7 @@ export const reqJob = async (
   }
 };
 
-export const ownJob = async (req: Request, res: Response) => {
+export const ownJob = async (_req: Request, res: Response) => {
   try {
     //const id = (req as any).token.User_ID;
     const job = (await jobService.ownJob(1)) as any;
