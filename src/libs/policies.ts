@@ -45,11 +45,11 @@ export const ownerAccess = (
     const fullJob = (req as any as CustomRequest).json as any;
     const userId = fullUser.User_ID;
     const userRole = fullUser.role;
-    const job = fullJob?.dataValues.User_ID;
+    const job_userId = fullJob?.dataValues.User_ID;
     if (!fullJob) {
       throw new Error("Incorret Job ID");
     } else {
-      const response = policiesService.ownerAccess(userId, job, userRole);
+      const response = policiesService.ownerAccess(userId, job_userId, userRole);
       if (response === true) {
         next();
       } else {
