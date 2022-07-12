@@ -21,9 +21,9 @@ export const getJobs = async (_req: Request, res: Response) => {
 export const newJob = async (req: Request, res: Response) => {
   try {
     const NewJobEntry = jobValidation.toNewWork(
-      req.body,
-      (req as any).token.User_ID,
-      (req as any).token.email
+      req.body, 1, 'user1@gmail.com'
+      /*(req as any).token.User_ID*/
+      /*(req as any).token.email*/
     );
     const addedJob = await jobService.addJobs(NewJobEntry);
     res.status(200).send(addedJob);
@@ -37,9 +37,9 @@ export const editJob = async (req: Request, res: Response) => {
     const id = +req.params.id;
     const job = await jobService.editJobs(id, req.body);
     if (+job == 1) {
-      res.status(200).send("Job Edit");
+      res.status(200).send({message: "Job Edit", status: 200});
     } else {
-      res.status(400).send("Error");
+      res.status(200).send({message: "Error, job was not edited", status: 400});
     }
   } catch (e: any) {
     res.status(400).send(e.message);
