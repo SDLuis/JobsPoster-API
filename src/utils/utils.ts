@@ -1,4 +1,4 @@
-import { category } from '../models/Job.model'
+import { workType } from '../models/Job.model'
 import { role } from '../models/User.model'
 
 export const isString = (string: string): boolean => {
@@ -14,7 +14,7 @@ export const isNumber = (number: number): boolean => {
 }
 
 export const isCategory = (param: any): boolean => {
-    return Object.values(category).includes(param)
+    return Object.values(workType).includes(param)
 }
 
 export const isRole = (param: any): boolean => {

@@ -1,4 +1,4 @@
-import { category, NewJobEntry } from '../models/Job.model'
+import { workType, NewJobEntry } from '../models/Job.model'
 import { isString, isNumber, isCategory, notEmpty } from '../utils/utils'
 
 const parseWorkTitle = (workTitleFromRequest: any): string => {
@@ -20,7 +20,7 @@ const parseOwnerEmail = (ownerEmailFromRequest: any): string => {
     return ownerEmailFromRequest
 }
 
-const parseWorkType = (workTypeFromRequest: any): category => {
+const parseWorkType = (workTypeFromRequest: any): workType => {
     if (!isString(workTypeFromRequest) || !isCategory(workTypeFromRequest) || notEmpty(workTypeFromRequest)) {
         throw new Error('Invalid Work Type')
     }
