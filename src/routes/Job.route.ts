@@ -21,6 +21,7 @@ router.put(
 );
 router.get("/:id", jobsContoller.findJob);
 router.get("/:category/list", jobsContoller.findJobByCategory);
+router.get("/workTitle/:param", jobsContoller.searchJobs);
 router.delete(
   "/delete/:id",
   /*authController.auth,

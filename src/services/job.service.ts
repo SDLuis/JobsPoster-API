@@ -1,13 +1,22 @@
+import { Op } from "sequelize";
+import { userModel } from "../models/User.model";
 import "../models/db.model";
 import {
+  workType,
   jobEntry,
   jobModel,
   NewJobEntry,
   NotSensistiveInfoJobs,
 } from "../models/Job.model";
 
-export const getJobs = (Jobs: jobEntry[]): jobEntry[] => {
-  return Jobs;
+export const getJobs = async (): Promise<jobEntry[]> => {
+  return await jobModel
+    .findAll({
+      include: { model: userModel, attributes: { exclude: ["password"] } },
+    })
+    .then((result) => {
+      return result;
+    });
 };
 export const getJobsWithoutSensitiveInfo = (
   jobs: NotSensistiveInfoJobs[]
@@ -50,9 +59,9 @@ export const findJob = (id: number): Promise<jobEntry[]> | undefined => {
 };
 
 export const findJobByCategory = (
-  category: string
+  workType: workType
 ): Promise<jobEntry[]> | undefined => {
-  return jobModel.findAll({ where: { workType: category } }) as any;
+  return jobModel.findAll({ where: { workType: workType } }) as any;
 };
 
 export const deleteJob = (id: number): Promise<number> | undefined => {
@@ -61,4 +70,12 @@ export const deleteJob = (id: number): Promise<number> | undefined => {
 
 export const ownJob = (id: number): Promise<jobEntry[]> | undefined => {
   return jobModel.findAll({ where: { User_ID: id } }) as any;
+};
+
+export const searchJobs = (
+  work_Title: string
+): Promise<jobEntry[]> | undefined => {
+  return jobModel.findAll({
+    where: { work_Title: { [Op.like]: "%" + work_Title + "%" } },
+  });
 };

@@ -1,18 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import * as jobService from "../services/job.service";
-import { jobModel } from "../models/Job.model";
+import { workType } from "../models/Job.model";
 import * as jobValidation from "../validations/job.validation";
-import { CustomRequest, userModel } from "../models/User.model";
+import { CustomRequest } from "../models/User.model";
 
 export const getJobs = async (_req: Request, res: Response) => {
   try {
-    await jobModel
-      .findAll({
-        include: { model: userModel, attributes: { exclude: ["password"] } },
-      })
-      .then((result) => {
-        res.send(jobService.getJobs(result));
-      });
+    jobService.getJobs().then((response) => {
+      res.status(200).send(jobService.getJobsWithoutSensitiveInfo(response))
+    })
   } catch (e: any) {
     res.status(400).send(e.message);
   }
@@ -59,7 +55,7 @@ export const findJob = async (req: Request, res: Response) => {
 export const findJobByCategory = async (req: Request, res: Response) => {
   try {
     const category = req.params.category;
-    const job = await jobService.findJobByCategory(category);
+    const job = await jobService.findJobByCategory(category as workType);
     res.status(200).send(job);
   } catch (e: any) {
     res.status(400).send(e.message);
@@ -100,6 +96,16 @@ export const ownJob = async (_req: Request, res: Response) => {
   try {
     //const id = (req as any).token.User_ID;
     const job = (await jobService.ownJob(1)) as any;
+    res.status(200).send(job);
+  } catch (e: any) {
+    res.status(400).send(e.message);
+  }
+};
+
+export const searchJobs = async (req: Request, res: Response) => {
+  try {
+    const param = req.params.param
+    const job = (await jobService.searchJobs(param)) as any;
     res.status(200).send(job);
   } catch (e: any) {
     res.status(400).send(e.message);

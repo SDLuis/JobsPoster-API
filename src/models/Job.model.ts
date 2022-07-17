@@ -7,7 +7,7 @@ import {
   AllowNull,
 } from "sequelize-typescript";
 
-export enum category {
+export enum workType {
   Full_Time = "Full Time",
   Part_Time = "Part Time",
   Remote = "Remote",
@@ -17,7 +17,7 @@ export interface IJobs {
   work_Title: string;
   User_ID?: number;
   owner_Email: string;
-  workType: category;
+  workType: workType;
   Position: string;
   apply_Method: string;
   description: string;
@@ -64,7 +64,7 @@ export class jobModel extends Model implements IJobs {
   @Column({
     type: DataType.STRING(100),
   })
-  workType!: category;
+  workType!: workType;
 
   @NotEmpty
   @AllowNull(false)
