@@ -23,7 +23,7 @@ export const login = async (req: Request, res: Response) => {
       const token = response;
       res.cookie("jwt2", token, {
         maxAge: 0o1 * 60 * 60 * 1000,
-        domain: 'jobsposter.herokuapp.com',
+        //domain: 'jobsposter.herokuapp.com',
         secure: true,
         sameSite: 'none'
       });

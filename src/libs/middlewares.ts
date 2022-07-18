@@ -26,7 +26,6 @@ app.use("/users", userRouter);
 app.use("/auth", authRouter);
 
 app.get("/", (_req, res) => {
-  res.cookie("trol", "valle")
   res.status(200).send("WELCOME!!");
 });
 
