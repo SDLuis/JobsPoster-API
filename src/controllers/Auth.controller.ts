@@ -24,7 +24,7 @@ export const login = async (req: Request, res: Response) => {
       res.cookie("jwt2", token, {
         httpOnly: true,
         maxAge: 0o1 * 60 * 60 * 1000,
-        domain: 'http://localhost:3000'
+        domain: '.jobsposter.herokuapp.com'
       });
       res.status(200).send({"loggedMessage":'U RE LOGED', "data": token});
     } else {
