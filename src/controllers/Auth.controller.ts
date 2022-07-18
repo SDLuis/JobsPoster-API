@@ -21,10 +21,11 @@ export const login = async (req: Request, res: Response) => {
     if (typeof response == "string") {
       //WORKINGG!!!!!!!
       const token = response;
-     /* res.cookie("jwt", token, {
+      res.cookie("jwt2", token, {
         httpOnly: true,
         maxAge: 0o1 * 60 * 60 * 1000,
-      });*/
+        domain: 'http://localhost:3000'
+      });
       res.status(200).send({"loggedMessage":'U RE LOGED', "data": token});
     } else {
       return response != undefined
