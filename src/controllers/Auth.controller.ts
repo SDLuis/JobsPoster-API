@@ -22,9 +22,10 @@ export const login = async (req: Request, res: Response) => {
       //WORKINGG!!!!!!!
       const token = response;
       res.cookie("jwt2", token, {
-        httpOnly: true,
         maxAge: 0o1 * 60 * 60 * 1000,
-        domain: '.jobsposter.herokuapp.com'
+        //domain: 'jobsposter.herokuapp.com',
+        secure: true,
+        sameSite: 'none'
       });
       res.status(200).send({"loggedMessage":'U RE LOGED', "data": token});
     } else {
@@ -39,7 +40,9 @@ export const login = async (req: Request, res: Response) => {
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies["jwt"];
+    const token = req.cookies.jwt;
+    console.log(req.cookies.jwt)
+
     if (!token) {
       res.status(400).send("unaunthenticated");
     } else {

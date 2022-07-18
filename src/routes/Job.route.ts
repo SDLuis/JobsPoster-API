@@ -1,11 +1,11 @@
 import { Router } from "express";
 import * as jobsContoller from "../controllers/Job.controller";
-//import * as authController from "../controllers/Auth.controller";
+import * as authController from "../controllers/Auth.controller";
 //import * as policies from "../libs/policies";
 const router = Router();
 
 router.get("/", jobsContoller.getJobs);
-router.get("/owner", /*authController.auth,*/ jobsContoller.ownJob);
+router.get("/owner", authController.auth, jobsContoller.ownJob);
 router.post(
   "/add",
   /*authController.auth,
