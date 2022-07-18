@@ -40,8 +40,8 @@ export const login = async (req: Request, res: Response) => {
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies.jwt;
-    console.log(req.cookies.jwt)
+    const token = req.cookies.jwt2;
+    console.log(req.cookies.jwt2)
 
     if (!token) {
       res.status(400).send("unaunthenticated");
