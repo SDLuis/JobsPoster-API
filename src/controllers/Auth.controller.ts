@@ -24,6 +24,7 @@ export const login = async (req: Request, res: Response) => {
       res.cookie("jwt", token, {
         maxAge: 0o1 * 60 * 60 * 1000,
         secure: true,
+        httpOnly: true,
         sameSite: 'none'
       });
       res.status(200).send({"loggedMessage":'U RE LOGED', "data": token});
