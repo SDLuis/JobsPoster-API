@@ -21,9 +21,8 @@ export const login = async (req: Request, res: Response) => {
     if (typeof response == "string") {
       //WORKINGG!!!!!!!
       const token = response;
-      res.cookie("jwt2", token, {
+      res.cookie("jwt", token, {
         maxAge: 0o1 * 60 * 60 * 1000,
-        //domain: 'jobsposter.herokuapp.com',
         secure: true,
         sameSite: 'none'
       });
@@ -40,8 +39,8 @@ export const login = async (req: Request, res: Response) => {
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies.jwt2;
-    console.log(req.cookies.jwt2)
+    const token = req.cookies.jwt;
+    console.log(req.cookies.jwt)
 
     if (!token) {
       res.status(400).send("unaunthenticated");

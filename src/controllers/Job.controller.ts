@@ -17,9 +17,9 @@ export const getJobs = async (_req: Request, res: Response) => {
 export const newJob = async (req: Request, res: Response) => {
   try {
     const NewJobEntry = jobValidation.toNewWork(
-      req.body, 1, 'user1@gmail.com'
-      /*(req as any).token.User_ID*/
-      /*(req as any).token.email*/
+      req.body,
+      (req as any).token.User_ID,
+      (req as any).token.email
     );
     const addedJob = await jobService.addJobs(NewJobEntry);
     res.status(200).send(addedJob);
@@ -92,10 +92,10 @@ export const reqJob = async (
   }
 };
 
-export const ownJob = async (_req: Request, res: Response) => {
+export const ownJob = async (req: Request, res: Response) => {
   try {
-    //const id = (req as any).token.User_ID;
-    const job = (await jobService.ownJob(1)) as any;
+    const id = (req as any).token.User_ID;
+    const job = (await jobService.ownJob(id)) as any;
     res.status(200).send(job);
   } catch (e: any) {
     res.status(400).send(e.message);
