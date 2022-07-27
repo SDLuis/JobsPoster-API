@@ -23,8 +23,7 @@ export const login = async (req: Request, res: Response) => {
       const token = response;
       res.cookie("jwt", token, {
         maxAge: 0o1 * 60 * 60 * 1000,
-        //working
-        //secure: true,
+        secure: true,
         httpOnly: true,
         sameSite: 'none'
       });
