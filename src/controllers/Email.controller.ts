@@ -60,7 +60,7 @@ const sendEmail = (req: Request, res: Response) => {
     };
     transporter.sendMail(mailOptions, (error: any, info: any) => {
       if (error) {
-        return res.status(200).send(error);
+        return res.status(400).send(error);
       } else {
          req.file != null
           ? fs.unlink(req.file?.path, (err) => {
