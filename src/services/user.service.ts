@@ -1,8 +1,12 @@
 import '../models/db.model'
 import { userModel, userEntry, NotSensistiveInfoUser, NewUserEntry } from '../models/User.model'
 
-export const getUsers = (Users: userEntry[]): userEntry[] => {
-    return Users
+export const getUsers = async (): Promise<userEntry[]> => {
+    return await userModel
+    .findAll()
+    .then((result) => {
+      return result;
+    });
 }
 
 export const getUsersWithoutSensitiveInfo = (Jobs: NotSensistiveInfoUser[]): NotSensistiveInfoUser[] => {

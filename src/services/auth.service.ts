@@ -61,7 +61,7 @@ export const Login = async (
           { id: user.User_ID },
           authConfig.secret,
           {
-            expiresIn: "9h",
+            expiresIn: "1h",
           }
         );
         return token;

@@ -22,7 +22,7 @@ export const login = async (req: Request, res: Response) => {
       //WORKINGG!!!!!!!
       const token = response;
       res.cookie("jwt", token, {
-        maxAge: 0o1 * 60 * 60 * 1000,
+        maxAge: 0o0 * 60 * 60 * 1000,
         secure: true,
         httpOnly: true,
         sameSite: 'none'
@@ -41,7 +41,6 @@ export const login = async (req: Request, res: Response) => {
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.cookies.jwt;
-    console.log(req.cookies.jwt)
 
     if (!token) {
       res.status(400).send("unaunthenticated");

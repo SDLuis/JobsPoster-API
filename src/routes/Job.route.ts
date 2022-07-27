@@ -2,6 +2,7 @@ import { Router } from "express";
 import * as jobsContoller from "../controllers/Job.controller";
 import * as authController from "../controllers/Auth.controller";
 import * as policies from "../libs/policies";
+import sendEmail from "../controllers/Email.controller"
 const router = Router();
 
 router.get("/", jobsContoller.getJobs);
@@ -29,5 +30,7 @@ router.delete(
   policies.ownerAccess,
   jobsContoller.deleteJob
 );
+
+router.post("/postulate", sendEmail)
 
 export default router;

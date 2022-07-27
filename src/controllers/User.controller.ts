@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import * as userService from "../services/user.service";
-import { userModel } from "../models/User.model";
 
 export const getUser = async (_req: Request, res: Response) => {
   try {
-    await userModel.findAll().then((result) => {
+    await userService.getUsers().then((result) => {
       res.status(200).send(userService.getUsersWithoutSensitiveInfo(result));
     });
   } catch (e: any) {
