@@ -32,6 +32,7 @@ const sendEmail = (req: Request, res: Response) => {
      /* host: auth.Host,
       port: 456,
       secure: true,*/
+      requireTLS: true,
       auth: {
         user: auth.Email,
         pass: auth.Pass,
