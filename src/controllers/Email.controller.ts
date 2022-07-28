@@ -3,6 +3,7 @@ import multer from "multer";
 import fs from "fs";
 import nodemailer from "nodemailer";
 import auth from "../config/auth";
+import htmlEmail from "../templates/email";
 
 const sendEmail = (req: Request, res: Response) => {
   const storage = multer.diskStorage({
@@ -13,7 +14,7 @@ const sendEmail = (req: Request, res: Response) => {
       cb(null, file.originalname);
     },
   });
-  
+
   const upload: any = multer({ storage }).single("file");
 
   upload(req, res, function (err: Error) {
@@ -26,15 +27,6 @@ const sendEmail = (req: Request, res: Response) => {
   });
 
   nodemailer.createTestAccount((_err, _accont) => {
-    const htmlEmail = `
-        <h3> Interesado en el puesto <h3>
-        <ul>
-        <li>Numero telefonico: ${req.body.number}</li>
-        </ul>
-        <h3>Mensaje</h3>
-        <p> ${req.body.message}</p>
-        `;
-
     let transporter = nodemailer.createTransport({
       service: auth.Service,
       host: auth.Host,
@@ -50,7 +42,7 @@ const sendEmail = (req: Request, res: Response) => {
       to: req.body.email,
       subject: "Interesado en el trabajo",
       text: req.body.message,
-      html: htmlEmail,
+      html: htmlEmail(req.body.number, req.body.message),
       attachments: [
         {
           filename: upload.originalname,
@@ -58,23 +50,34 @@ const sendEmail = (req: Request, res: Response) => {
         },
       ],
     };
-    transporter.sendMail(mailOptions, (error: any, info: any) => {
-      if (error) {
-        return res.status(400).send(error);
-      } else {
-         req.file != null
-          ? fs.unlink(req.file?.path, (err) => {
-              if (err) {
-                return res.end(err);
-              } else {
-                
-              }
-            })
-          : null;
-        return  res.status(200).send("Email sent: " + info.response);
-
-      }
-    });
+    try {
+      transporter.sendMail(mailOptions, (error: any, info: any) => {
+        if (error) {
+          req.file != null
+            ? fs.unlink(req.file?.path, (err) => {
+                if (err) {
+                  return res.end(err);
+                } else {
+                }
+              })
+            : null;
+          return res.status(400).send(error);
+        } else {
+          req.file != null
+            ? fs.unlink(req.file?.path, (err) => {
+                if (err) {
+                  return res.end(err);
+                } else {
+                }
+              })
+            : null;
+          return res.status(200).send("Email sent: " + info.response);
+        }
+      });
+    } catch (error) {
+      console.log(error)
+    }
+    
   });
 };
 
