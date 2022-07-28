@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import multer from "multer";
-import fs from "fs";
+//import fs from "fs";
 import nodemailer from "nodemailer";
 import auth from "../config/auth";
 import htmlEmail from "../templates/email";
@@ -28,11 +28,11 @@ const sendEmail = (req: Request, res: Response) => {
 
   nodemailer.createTestAccount((_err, _accont) => {
     let transporter = nodemailer.createTransport({
-      service: auth.Service,
-     /* host: auth.Host,
-      port: 456,
-      secure: true,*/
-      requireTLS: true,
+      //service: auth.Service,
+      host: auth.Host,
+      /*port: 456,
+      secure: true,
+      requireTLS: true,*/
       auth: {
         user: auth.Email,
         pass: auth.Pass,
@@ -54,24 +54,25 @@ const sendEmail = (req: Request, res: Response) => {
     try {
       transporter.sendMail(mailOptions, (error: any, info: any) => {
         if (error) {
-          req.file != null
+          /*req.file != null
             ? fs.unlink(req.file?.path, (err) => {
                 if (err) {
                   return res.end(err);
                 } else {
                 }
               })
-            : null;
+            : null;*/
+            console.log(error)
           return res.status(400).send(error);
         } else {
-          req.file != null
+        /*  req.file != null
             ? fs.unlink(req.file?.path, (err) => {
                 if (err) {
                   return res.end(err);
                 } else {
                 }
               })
-            : null;
+            : null;*/
           return res.status(200).send("Email sent: " + info.response);
         }
       });
