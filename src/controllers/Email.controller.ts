@@ -29,9 +29,9 @@ const sendEmail = (req: Request, res: Response) => {
   nodemailer.createTestAccount((_err, _accont) => {
     let transporter = nodemailer.createTransport({
       service: auth.Service,
-      host: auth.Host,
+     /* host: auth.Host,
       port: 456,
-      secure: true,
+      secure: true,*/
       auth: {
         user: auth.Email,
         pass: auth.Pass,
