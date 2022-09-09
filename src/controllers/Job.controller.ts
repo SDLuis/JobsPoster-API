@@ -3,6 +3,7 @@ import * as jobService from "../services/job.service";
 import { workType } from "../models/Job.model";
 import * as jobValidation from "../validations/job.validation";
 import { CustomRequest } from "../models/User.model";
+import { findUser } from "../services/user.service"
 
 export const getJobs = async (_req: Request, res: Response) => {
   try {
@@ -94,8 +95,11 @@ export const reqJob = async (
 
 export const ownJob = async (req: Request, res: Response) => {
   try {
+    let job
     const id = (req as any).token.User_ID;
-    const job = (await jobService.ownJob(id)) as any;
+    const role = await findUser(id) as any 
+    console.log(role.role);
+    role.role == 'admin' ? job = (await jobService.getJobs()) as any : job = (await jobService.ownJob(id)) as any
     res.status(200).send(job);
   } catch (e: any) {
     res.status(400).send(e.message);
