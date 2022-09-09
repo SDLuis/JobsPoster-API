@@ -13,6 +13,9 @@ export const getJobs = async (): Promise<jobEntry[]> => {
   return await jobModel
     .findAll({
       include: { model: userModel, attributes: { exclude: ["password"] } },
+      order: [
+        ['Job_ID', 'DESC'],
+    ],
     })
     .then((result) => {
       return result;
@@ -61,21 +64,21 @@ export const findJob = (id: number): Promise<jobEntry[]> | undefined => {
 export const findJobByCategory = (
   workType: workType
 ): Promise<jobEntry[]> | undefined => {
-  return jobModel.findAll({ where: { workType: workType } }) as any;
+  return jobModel.findAll({ where: { workType: workType }, order: [['Job_ID', 'DESC']],})as any;
 };
 
 export const deleteJob = (id: number): Promise<number> | undefined => {
-  return jobModel.destroy({ where: { Job_ID: id } }) as any;
+  return jobModel.destroy({ where: { Job_ID: id }}) as any;
 };
 
 export const ownJob = (id: number): Promise<jobEntry[]> | undefined => {
-  return jobModel.findAll({ where: { User_ID: id } }) as any;
+  return jobModel.findAll({ where: { User_ID: id }, order: [['Job_ID', 'DESC']]}) as any;
 };
 
 export const searchJobs = (
   work_Title: string
 ): Promise<jobEntry[]> | undefined => {
   return jobModel.findAll({
-    where: { work_Title: { [Op.like]: "%" + work_Title + "%" } },
+    where: { work_Title: { [Op.like]: "%" + work_Title + "%" } }, order: [['Job_ID', 'DESC']]
   });
 };
