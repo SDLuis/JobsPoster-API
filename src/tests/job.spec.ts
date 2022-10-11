@@ -108,4 +108,14 @@ test.describe("need auth", () => {
     expect(await jobs.json()).toHaveProperty("work_Title", work_Title);
     expect(await jobs.json()).toHaveProperty("workType", workType);
   });
+  test("owner job", async ({ request }) => {
+    const id: number = 372;
+    const work_Title: string = "Soporte Tecnico";
+    const workType: string = "Remote";
+    await request.get(`http://localhost:5000/jobs/edit/${id}`);
+    const jobs = await context.get(`/jobs/${id}`);
+    expect(await jobs.json()).toHaveProperty("Job_ID", id);
+    expect(await jobs.json()).toHaveProperty("work_Title", work_Title);
+    expect(await jobs.json()).toHaveProperty("workType", workType);
+  });
 });
