@@ -15,7 +15,7 @@ test.afterAll(async ({}) => {
 test("register", async ({ request }) => {
   const First_Name: string = "Luis";
   const Last_Name: string = "Tejeda";
-  const email: string = "1s4@gmail.com";
+  const email: string = "1sD4@gmail.com";
   const user = await request.post("http://localhost:5000/auth/register", {
     data: {
       First_Name: First_Name,

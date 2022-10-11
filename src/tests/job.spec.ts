@@ -57,7 +57,7 @@ test("find jobs by worktitle", async () => {
 });
 
 test.describe("need auth", () => {
-  test.beforeAll(async ({ request }) => {
+  test.beforeEach(async ({ request }) => {
     await request.post("http://localhost:5000/auth/login", {
       data: {
         email: "luis@gmail.com",
@@ -66,7 +66,7 @@ test.describe("need auth", () => {
     });
   });
   test("Delete job", async ({ request }) => {
-    const id: number = 364;
+    const id: number = 400;
     const job = await request.delete(`http://localhost:5000/jobs/delete/${id}`);
     const res = await job.text();
     expect(res).toContain("Job deleted");
@@ -91,8 +91,8 @@ test.describe("need auth", () => {
     );
   });
   test("Edit job", async ({ request }) => {
-    const id: number = 372;
-    const work_Title: string = "Soporte Tecnico";
+    const id: number = 363;
+    const work_Title: string = "Soporte Tecnico II";
     const workType: string = "Remote";
     await request.put(`http://localhost:5000/jobs/edit/${id}`, {
       data: {
@@ -109,13 +109,14 @@ test.describe("need auth", () => {
     expect(await jobs.json()).toHaveProperty("workType", workType);
   });
   test("owner job", async ({ request }) => {
-    const id: number = 372;
-    const work_Title: string = "Soporte Tecnico";
-    const workType: string = "Remote";
-    await request.get(`http://localhost:5000/jobs/edit/${id}`);
-    const jobs = await context.get(`/jobs/${id}`);
-    expect(await jobs.json()).toHaveProperty("Job_ID", id);
-    expect(await jobs.json()).toHaveProperty("work_Title", work_Title);
-    expect(await jobs.json()).toHaveProperty("workType", workType);
+    const work_Title: string = "Programador Frontend";
+    const workType: string = "Part Time";
+    const jobs = await request.get(`http://localhost:5000/jobs/owner`);
+    expect(await jobs.json()).toContainEqual(
+      expect.objectContaining({
+        work_Title: work_Title,
+        workType: workType,
+      })
+    );
   });
 });
