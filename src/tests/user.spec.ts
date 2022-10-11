@@ -45,7 +45,6 @@ test.describe("need auth", () => {
         password: await bcrypt.hash("123", 8),
       },
     });
-    console.log(await res.text());
     expect(await res.text()).toContain('User Edit')
   });
 });
@@ -53,7 +52,6 @@ test.describe("need auth", () => {
 test("All user", async ({}) => {
   const users = await context.get("/users");
   expect(users.ok()).toBeTruthy();
-  console.log(await users.text());
   expect(await users.json()).toContainEqual(
     expect.objectContaining({
       First_Name: "Luis",
